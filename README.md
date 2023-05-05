@@ -18,5 +18,20 @@ For example, these are some names one might encounter:
 Supplying one format that covers each situation is difficult. Instead, we should define
 consistent naming rules, and apply those to a list of names.
 
+# Usage
+```
+usage: main.py [-h] [-i [FILE]] [-s SUFFIX] -c CONFIG
+
+options:
+  -h, --help            show this help message and exit
+  -i [FILE], --input [FILE]
+                        Newline delimited list of names. If empty, stdin is used.
+  -s SUFFIX, --suffix SUFFIX
+                        A suffix, such as @domain.nl
+  -c CONFIG, --config CONFIG
+                        Config file.
+```
+
+
 # Acknowledgments
-Inspire by https://github.com/urbanadventurer/username-anarchy
+Inspired by https://github.com/urbanadventurer/username-anarchy
