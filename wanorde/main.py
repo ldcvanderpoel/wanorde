@@ -8,8 +8,13 @@ import sys
 from datatypes import BasicConfig, Config, InfixesConfig, OtherConfig
 from format import format_names
 from name import Name, NameType
-from util import (ensure_list, generate_configs, parse_json_config,
-                  print_usernames, read_input_file)
+from util import (
+    ensure_list,
+    generate_configs,
+    parse_json_config,
+    print_usernames,
+    read_input_file,
+)
 
 
 def custom_config():
@@ -77,9 +82,8 @@ def main():
 
     args = parser.parse_args()
     # args.config
-    print(read_input_file(args.input))
-    exit()
-    names = [Name(name) for name in read_from_stdin()]
+    names = read_input_file(args.input)
+    names = [Name(name) for name in names]
 
     sorted_names = sorted(names, key=operator.attrgetter("type"))
 

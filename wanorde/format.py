@@ -47,14 +47,17 @@ class Format:
             for element in name.middle:
                 element = element[0]
 
-        fullname_part = f"{config.infixes.concatonate_character}".join(
-            ensure_list(name.middle)
-        )
+        if name.middle:
+            fullname_part = f"{config.infixes.concatonate_character}".join(
+                ensure_list(name.middle)
+            )
 
-        #  print((ensure_list(first) + ensure_list(fullname_part)))
-        fullname_part = f"{config.infixes.concatonate_first_character}".join(
-            ensure_list(ensure_list(name.first) + ensure_list(fullname_part))
-        )
+            fullname_part = f"{config.infixes.concatonate_first_character}".join(
+                ensure_list(ensure_list(name.first) + ensure_list(fullname_part))
+            )
+        else:
+            fullname_part = name.first
+
         fullname = f"{config.infixes.concatonate_last_character}".join(
             ensure_list(ensure_list(fullname_part) + ensure_list(name.last))
         )

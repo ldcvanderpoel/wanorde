@@ -19,8 +19,7 @@ def read_input_file(file: str) -> list[str]:
     names = []
     for line in fileinput.input(files=file if file else ("-",)):
         names.append(line.strip())
-        print(line)
-    print(names)
+    return names
 
 
 def ensure_list(element_or_list):
