@@ -57,8 +57,9 @@ def main():
     config_parser_group.add_argument(
         "-c",
         "--config",
-        help="Config file.",
+        help="Config file(s).",
         required=False,
+        nargs='*',
         default="",
     )
     # Need to test
@@ -91,7 +92,7 @@ def main():
 
     configs = list()
     if args.config:
-        configs = [parse_json_config(args.config)]
+        configs = parse_json_config(args.config)
     else:
         configs = generate_configs()
 

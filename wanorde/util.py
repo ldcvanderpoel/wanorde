@@ -99,12 +99,18 @@ def remove_apostrophe(element_or_list: str | list[str]) -> str | list[str]:
     return new_list
 
 
-def parse_json_config(filename: str) -> Config:
-    with open(filename, "r") as f:
-        data = json.load(f)
+def parse_json_config(filenames: list[str]) -> list[Config]:
+    print(filenames)
 
-    basic = BasicConfig(**data["basic"])
-    infixes = InfixesConfig(**data["infixes"])
-    other = OtherConfig(**data["other"])
+    configs = []
+    for filename in filenames:
+        with open(filename, "r") as f:
+            data = json.load(f)
 
-    return Config(basic, infixes, other)
+        basic = BasicConfig(**data["basic"])
+        infixes = InfixesConfig(**data["infixes"])
+        other = OtherConfig(**data["other"])
+
+        configs.append(Config(basic, infixes, other))
+    
+    return configs
