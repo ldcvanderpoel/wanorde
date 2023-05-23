@@ -6,6 +6,9 @@ class NameType(IntEnum):
     Basic = auto()
     Infixes = auto()
     Invalid = auto()
+    firstname: str
+    infix: str
+    lastname: str
 
 
 @dataclass

@@ -4,6 +4,7 @@ import sys
 from itertools import product
 
 from datatypes import BasicConfig, Config, InfixesConfig, NameType, OtherConfig
+from name import Name
 
 
 def open_file(file_name: str) -> str:
@@ -55,15 +56,23 @@ def generate_configs():
     return generate_configs
 
 
-def print_usernames(names: list[NameType], suffix: str) -> None:
+def print_usernames(names: list[Name], suffix: str, csv = False) -> None:
     # usernames = sorted(names.usernames)
     # sorted_names = sort(names)
     all_usernames = []
+    if csv:
+        print('username,first name,infix,last name')
+
     for name in names:
         usernames = [f"{username}{suffix}" for username in name.usernames]
         all_usernames += usernames
+        
+        if csv:
+            for username in usernames:
+                print(f'{username},{name.first},{" ".join(name.middle)},{name.last}')
 
-    print("\n".join(all_usernames))
+    if not csv:
+        print("\n".join(all_usernames))
 
     # print(names)
     #

@@ -46,6 +46,8 @@ class Format:
         if config.infixes.abbreviate:
             for element in name.middle:
                 element = element[0]
+            for i, element in enumerate(name.middle):
+                name.middle[i] = element[0]
 
         if name.middle:
             fullname_part = f"{config.infixes.concatonate_character}".join(

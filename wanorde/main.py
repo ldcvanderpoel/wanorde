@@ -8,13 +8,8 @@ import sys
 from datatypes import BasicConfig, Config, InfixesConfig, OtherConfig
 from format import format_names
 from name import Name, NameType
-from util import (
-    ensure_list,
-    generate_configs,
-    parse_json_config,
-    print_usernames,
-    read_input_file,
-)
+from util import (ensure_list, generate_configs, parse_json_config,
+                  print_usernames, read_input_file)
 
 
 def custom_config():
@@ -36,7 +31,7 @@ def custom_config():
     return Config(basic, infixes, other)
 
 
-def process_configs(configs: list[Config], names: list[NameType]):
+def process_configs(configs: list[Config], names: list[Name]):
     for config in configs:
         format_names(names, config)
 
@@ -80,6 +75,13 @@ def main():
     #     default=""
     # )
 
+    parser.add_argument(
+        "--csv",
+        help="CSV output containing, mapping username with original name.",
+        required=False,
+        action='store_true'
+    )
+
     args = parser.parse_args()
     # args.config
     names = read_input_file(args.input)
@@ -94,7 +96,7 @@ def main():
         configs = generate_configs()
 
     process_configs(configs, sorted_names)
-    print_usernames(sorted_names, args.suffix)
+    print_usernames(sorted_names, args.suffix, args.csv)
 
 
 if __name__ == "__main__":
