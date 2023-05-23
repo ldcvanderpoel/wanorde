@@ -71,8 +71,9 @@ def print_usernames(names: list[Name], suffix: str, csv = False) -> None:
             for username in usernames:
                 print(f'{username},{name.first},{" ".join(name.middle)},{name.last}')
 
+
     if not csv:
-        print("\n".join(all_usernames))
+        print("\n".join(sorted(set(all_usernames))))
 
     # print(names)
     #
