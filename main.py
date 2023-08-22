@@ -24,9 +24,9 @@ def main():
         required=False,
         default="",
     )
-    config_parser_group = parser.add_mutually_exclusive_group(required=True)
+    # config_parser_group = parser.add_mutually_exclusive_group(required=True)
 
-    config_parser_group.add_argument(
+    parser.add_argument(
         "-c",
         "--config",
         help="Config file(s). If no config file(s) are supplied, all possible configurations are generated.",
