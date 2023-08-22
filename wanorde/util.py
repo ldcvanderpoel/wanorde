@@ -1,10 +1,11 @@
 import fileinput
 import json
+import operator
 import sys
 from itertools import product
 
-from datatypes import BasicConfig, Config, InfixesConfig, NameType, OtherConfig
-from name import Name
+from wanorde.datatypes import (BasicConfig, Config, InfixesConfig, NameType,
+                               OtherConfig)
 
 
 def open_file(file_name: str) -> str:
@@ -27,7 +28,8 @@ def ensure_list(element_or_list):
     return [element_or_list] if isinstance(element_or_list, str) else element_or_list
 
 
-def generate_configs():
+def generate_configs() -> list:
+    
     basic_options = [{True, False}, {True, False}, {".", ""}]
     infix_options = [
         {".", ""},
@@ -39,48 +41,25 @@ def generate_configs():
     other_options = [{True, False}, {True, False}]
     basic_length = len(basic_options)
     infix_length = len(infix_options)
+    other_length = len(other_options)
     options = basic_options + infix_options + other_options
     generated_options = product(*options)
     generate_configs = []
 
+    print(generate_configs)
+
     for config in generated_options:
         generated_basic_options = config[:basic_length]
-        generated_infix_options = config[basic_length : basic_config + infix_length]
-        generated_other_options = config[basic_config + infix_length :]
+        generated_infix_options = config[basic_length : basic_length + infix_length]
+        generated_other_options = config[basic_length + infix_length :]
         basic_config = BasicConfig(*generated_basic_options)
-        infix_config = InfixesConfig(*infix_length)
+        infix_config = InfixesConfig(*generated_infix_options)
         other_config = OtherConfig(*generated_other_options)
 
-        generate_configs.append(Config(basic_config, infix_config))
+        generate_configs.append(Config(basic_config, infix_config, other_config))
 
     return generate_configs
 
-
-def print_usernames(names: list[Name], suffix: str, csv = False) -> None:
-    # usernames = sorted(names.usernames)
-    # sorted_names = sort(names)
-    all_usernames = []
-    if csv:
-        print('username,first name,infix,last name')
-
-    for name in names:
-        usernames = [f"{username}{suffix}" for username in name.usernames]
-        all_usernames += usernames
-        
-        if csv:
-            for username in usernames:
-                print(f'{username},{name.first},{" ".join(name.middle)},{name.last}')
-
-
-    if not csv:
-        print("\n".join(sorted(set(all_usernames))))
-
-    # print(names)
-    #
-    # for name in names:
-    #     #  print(name.info)
-    #     print("\n".join(usernames))
-    #     print("\n".join(sorted(name.usernames)))
 
 
 def remove_apostrophe(element_or_list: str | list[str]) -> str | list[str]:
@@ -101,8 +80,6 @@ def remove_apostrophe(element_or_list: str | list[str]) -> str | list[str]:
 
 
 def parse_json_config(filenames: list[str]) -> list[Config]:
-    print(filenames)
-
     configs = []
     for filename in filenames:
         with open(filename, "r") as f:

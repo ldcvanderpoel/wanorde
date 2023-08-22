@@ -1,17 +1,8 @@
 import re
 
-from datatypes import Config, NameType
-from name import Name
-from util import ensure_list, remove_apostrophe
-
-
-def format_names(names: list[Name], config: Config):
-    formatter = Format(config)
-
-    for name in names:
-        username = formatter.format(name)
-        name.usernames.add(username)
-        name.reset()
+from wanorde.datatypes import Config, NameType
+from wanorde.name import Name
+from wanorde.util import ensure_list, remove_apostrophe
 
 
 class Format:
@@ -51,7 +42,7 @@ class Format:
 
         if name.middle:
             fullname_part = f"{config.infixes.concatonate_character}".join(
-                ensure_list(name.middle)
+                name.middle
             )
 
             fullname_part = f"{config.infixes.concatonate_first_character}".join(
@@ -69,20 +60,32 @@ class Format:
         config = self.config
 
         if config.other.strip_apostrophe:
-            name.first = remove_apostrophe(name.first)
-            name.middle = remove_apostrophe(name.middle)
-            name.last = remove_apostrophe(name.last)
+            name.first = ensure_list(remove_apostrophe(name.first))
+            name.middle = ensure_list(remove_apostrophe(name.middle))
+            name.last = ensure_list(remove_apostrophe(name.last))
 
         if config.basic.firstname_abbreviated:
-            name.first = name.first[0]
+            name.first = ensure_list(name.first[0])
 
         if config.other.remove_marriage_name:
             cutoff = " ".join(ensure_list(name.middle) + ensure_list(name.last))
             cutoff = re.sub(r"-.*", "", cutoff)
             cutoff = cutoff.split(" ")
-            name.middle = cutoff[:-1]
-            name.last = cutoff[-1]
+            name.middle = ensure_list(cutoff[:-1])
+            name.last = ensure_list(cutoff[-1])
 
-        # laurens.van.der.poel -> van.der.poel.laurens
         if config.basic.first_name_last:
             name.first, name.middle, name.last = name.middle, name.last, name.first
+
+
+def format_names(names: list[Name], config: Config):
+    formatter = Format(config)
+
+    for name in names:
+        username = formatter.format(name)
+        name.usernames.add(username)
+        name.reset()
+
+def process_configs(configs: list[Config], names: list[Name]):
+    for config in configs:
+        format_names(names, config)

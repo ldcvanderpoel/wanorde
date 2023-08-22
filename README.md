@@ -29,7 +29,7 @@ options:
   -s SUFFIX, --suffix SUFFIX
                         A suffix, such as @domain.nl
   -c CONFIG, --config CONFIG
-                        Config file.
+                        Config file. See `examples/config.json`.
 ```
 
 

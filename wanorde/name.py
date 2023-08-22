@@ -1,10 +1,11 @@
-from datatypes import BasicConfig, InfixesConfig, NameType
+from wanorde.datatypes import BasicConfig, InfixesConfig, NameType
+from wanorde.util import ensure_list, read_input_file
 
 
 class Name:
     """
     Assumes names are supplied with chunks delimited by spaces.
-    E.g. 'First van der Last'
+    E.g. 'Jan van der Jansen'
     """
 
     lowercase = True
@@ -26,9 +27,9 @@ class Name:
         self._preprocess()
 
         self.chunks = self.name.split(" ")
-        self.first = self.chunks[0]
-        self.middle = self.chunks[1:-1]
-        self.last = self.chunks[-1]
+        self.first = ensure_list(self.chunks[0])
+        self.middle = ensure_list(self.chunks[1:-1])
+        self.last = ensure_list(self.chunks[-1])
 
     def _get_type(self):
         if len(self.chunks) == 1:
@@ -59,3 +60,30 @@ class Name:
     @property
     def info(self) -> str:
         return f"{self.original}, {self.name}, {self.type}"
+
+
+
+def print_usernames(names: list[Name], suffix: str, csv = False) -> None:
+    all_usernames = []
+    if csv:
+        print('username,first name,infix,last name')
+
+    for name in names:
+        usernames = [f"{username}{suffix}" for username in name.usernames]
+        all_usernames += usernames
+        
+        if csv:
+            for username in usernames:
+                print(f'{username},{name.first},{" ".join(name.middle)},{name.last}')
+
+
+    if not csv:
+        print("\n".join(sorted(set(all_usernames))))
+
+def read_names(input_file: str) -> list[Name]:
+    """Read names into sorted list of Name objects."""
+    names = read_input_file(input_file)
+    names = [Name(name) for name in names]
+
+    return sorted(names, key=str)
+ 

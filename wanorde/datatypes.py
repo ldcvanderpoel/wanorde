@@ -57,11 +57,11 @@ class InfixesConfig:
 @dataclass
 class OtherConfig:
     # Remove apostrophe.
-    # laurens.van.'t.poel -> laurens.van.t.poel
+    # jan.'t.jansen -> jan.t.jansen
     strip_apostrophe: bool
 
     # Remove the extra name received after marriage, e.g.
-    # laurens.van.der.poel-slim -> laurens.van.der.poel
+    # jan van der jansen-visser -> jan.van.der.jansen
     remove_marriage_name: bool
 
 
