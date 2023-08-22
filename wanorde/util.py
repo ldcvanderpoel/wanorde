@@ -27,6 +27,8 @@ def read_input_file(file: str) -> list[str]:
 def ensure_list(element_or_list):
     return [element_or_list] if isinstance(element_or_list, str) else element_or_list
 
+def ensure_string(element_or_list):
+    return element_or_list if isinstance(element_or_list, str) else ' '.join(element_or_list)
 
 def generate_configs() -> list:
     
@@ -45,8 +47,6 @@ def generate_configs() -> list:
     options = basic_options + infix_options + other_options
     generated_options = product(*options)
     generate_configs = []
-
-    print(generate_configs)
 
     for config in generated_options:
         generated_basic_options = config[:basic_length]
@@ -90,5 +90,4 @@ def parse_json_config(filenames: list[str]) -> list[Config]:
         other = OtherConfig(**data["other"])
 
         configs.append(Config(basic, infixes, other))
-    
     return configs

@@ -1,5 +1,5 @@
-from wanorde.datatypes import BasicConfig, InfixesConfig, NameType
-from wanorde.util import ensure_list, read_input_file
+from wanorde.datatypes import NameType
+from wanorde.util import ensure_list, ensure_string, read_input_file
 
 
 class Name:
@@ -74,7 +74,7 @@ def print_usernames(names: list[Name], suffix: str, csv = False) -> None:
         
         if csv:
             for username in usernames:
-                print(f'{username},{name.first},{" ".join(name.middle)},{name.last}')
+                print(f'{username},{ensure_string(name.first)},{ensure_string(name.middle)},{ensure_string(name.last)}')
 
 
     if not csv:

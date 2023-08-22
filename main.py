@@ -45,12 +45,13 @@ def main():
     args = parser.parse_args()
 
     names = read_names(args.input)
-    
+
     configs = list()
     if args.config:
         configs = parse_json_config(args.config)
     else:
         configs = generate_configs()
+
 
     process_configs(configs, names)
     print_usernames(names, args.suffix, args.csv)
