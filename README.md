@@ -37,6 +37,8 @@ options:
 
 ```
 
+# Audience
+This tool is designed for penetration testers and red teamers to aid in password guessing attacks. Obviously, only perform tests against target for which you have explicit permission.
 
 # Acknowledgments
 Inspired by https://github.com/urbanadventurer/username-anarchy
